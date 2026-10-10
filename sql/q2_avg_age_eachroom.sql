@@ -4,6 +4,6 @@ select
 	from students s
 	join rooms r 
 	on r.id=s.room
-group by r.name
-order by avg_age asc 
+group by r.id, r.name
+order by avg_age,r.id asc 
 limit 5;
