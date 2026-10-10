@@ -1,3 +1,3 @@
 create index students_room
-on students(rooms);
+on students(room);
 ANALYZE students;

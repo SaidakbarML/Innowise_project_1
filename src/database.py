@@ -22,8 +22,8 @@ class Database:
             )
             print('connected to the database succesfuly')
             return self._conn
-        except:
-            raise "cant connect to the database "
+        except Exception as e:
+            raise e
 
     def close(self):
         self._conn.close()
