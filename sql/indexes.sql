@@ -1,3 +1,3 @@
-create index students_room
-on students(room);
+CREATE INDEX students_room
+ON students(room);
 ANALYZE students;

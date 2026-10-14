@@ -5,3 +5,5 @@ output/
 rooms.csv
 students.csv
 test.ipynb
+data/
+logs/

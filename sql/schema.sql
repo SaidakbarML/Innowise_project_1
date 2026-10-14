@@ -3,17 +3,17 @@ DROP TABLE IF EXISTS rooms CASCADE;
 
 --
 
-create table rooms  (
-	id int primary key,
-	name varchar(255)
+CREATE TABLE rooms  (
+	id INT PRIMARY KEY,
+	name VARCHAR(255)
 );
 
 --
 
-create table students (
-	birthday timestamp, 
-	id int primary key,
-	name varchar(255),
-	room int references rooms(id),
-	sex char(1)
+CREATE TABLE students (
+	birthday TIMESTAMP, 
+	id INT PRIMARY KEY,
+	name VARCHAR(255),
+	room INT REFERENCES rooms(id),
+	sex CHAR(1)
 );

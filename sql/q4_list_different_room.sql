@@ -1,8 +1,8 @@
-select r.name from students s
-join rooms r
-on r.id=s.room
-group by r.id,r.name 
-having
-count(case when sex='M' then 1 end)>0 and 
-count(case when sex='F' then 1 end)>0
-order by r.id;
+SELECT r.name FROM students s
+JOIN rooms r
+ON r.id=s.room
+GROUP BY r.id,r.name 
+HAVING
+COUNT(CASE WHEN sex='M' THEN 1 END)>0 AND 
+COUNT(CASE WHEN sex='F' THEN 1 END)>0
+ORDER BY r.id;

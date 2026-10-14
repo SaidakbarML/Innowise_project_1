@@ -1,9 +1,9 @@
-select
-	round(avg(extract (epoch from (now()-s.birthday)))/31536000,2) as avg_age,
+SELECT
+	ROUND(AVG(EXTRACT (EPOCH FROM (NOW()-s.birthday)))/31536000,2) AS avg_age,
 	r.name
-	from students s
-	join rooms r 
-	on r.id=s.room
-group by r.id, r.name
-order by avg_age,r.id asc 
-limit 5;
+	FROM students s
+	JOIN rooms r 
+	ON r.id=s.room
+GROUP BY r.id, r.name
+ORDER BY avg_age,r.id ASC 
+LIMIT 5;

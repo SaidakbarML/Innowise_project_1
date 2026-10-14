@@ -3,6 +3,9 @@
 from src.config import load_config, DbConfig
 from contextlib import contextmanager
 import psycopg2
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -11,7 +14,7 @@ class Database:
         self._conf = config
         self._conn = None
 
-    def connect(self):
+    def connect(self): # makes new connection using config
         try:
             self._conn=psycopg2.connect(
                 database=self._conf.name,
@@ -20,9 +23,10 @@ class Database:
                 host = self._conf.host,
                 port = self._conf.port
             )
-            print('connected to the database succesfuly')
+            logger.info('connected to the database succesfuly')
             return self._conn
         except Exception as e:
+            logger.error('connection failed: %s',e)
             raise e
 
     def close(self):
@@ -39,11 +43,12 @@ class Database:
             raise
         finally:
             conn.close()
+    # run one query and return rows as dict if there is any
     def run(self,raw_sql,params=None):
         with self.connection() as conn:
             curr = conn.cursor()
             curr.execute(raw_sql,params)
-            print(f"Executed query: \n {raw_sql}")
+            logger.info('Executed query: %s',raw_sql)
             if curr.description:
                 columns = [d[0] for d in curr.description]
                 return [dict(zip(columns,row)) for row in curr.fetchall()]

@@ -1,4 +1,6 @@
 import os
+import logging
+from pathlib import Path
 from dataclasses import dataclass
 from dotenv import load_dotenv
 from src.sql_parser import read_sql
@@ -7,6 +9,7 @@ from src.sql_parser import read_sql
 load_dotenv()
 
 
+# holds db settings
 @dataclass
 class DbConfig:
     name: str
@@ -24,7 +27,17 @@ class DataLoaderConf:
 
 
 
-def load_config() -> DbConfig:
+# set format for all logs, call it once at start
+def setup_logging(level=logging.INFO):
+    Path('logs').mkdir(exist_ok=True) # create logs folder if not exist
+    logging.basicConfig(
+        level=level,
+        format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+        handlers=[logging.FileHandler('logs/app.log')] # only file, no terminal
+    )
+
+
+def load_config() -> DbConfig: # take values from .env
     return DbConfig(
         name=os.getenv('DB_NAME'),
         user=os.getenv('DB_USER'),
@@ -35,7 +48,7 @@ def load_config() -> DbConfig:
 
 
 
-def load_queries():
+def load_queries(): # reads sql files and return them
     q1 = read_sql('sql/q1_num_students_eachroom.sql')
     q2 = read_sql('sql/q2_avg_age_eachroom.sql')
     q3 = read_sql('sql/q3_diff_age.sql')
